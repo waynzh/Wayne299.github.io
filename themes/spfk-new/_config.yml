@@ -1,0 +1,195 @@
+# >>> Basic Setup | 基础设置 <<<
+
+# Header | 主菜单
+## About Page: `hexo new page about`
+## Tags Cloud Page: `hexo new page tags`
+menu:
+  博客首页: /
+  作品展示: /works
+# 留言打卡: /about
+# 前端导航: /FrontEndGuide
+# 静心阅读: /tags
+# 光影之路: /instagram
+# 随笔: /tags/随笔
+  # 工具控: /tags/Tools
+  Mac 系列: /tags/Mac
+  前端技术: /tags/前端
+  算法学习: /tags/FreeCodeCamp
+
+# Link to your avatar | 填写头像地址
+avatar: img/head.jpg
+
+# Small icon of Your site | 站点小图标地址
+favicon: img/favicon.png
+
+# Social info. Bar | 社交信息展示
+## Keep "mailto:" in Email | 设置 Email 时保留 "mailto:"
+## Encrypt email 加密邮件地址 http://ctrlq.org/encode/
+## RSS requires a plugin to take effect | 使用 RSS 需先安装对应插件
+## https://github.com/hexojs/hexo-generator-feed
+subnav:
+  mail: "mailto:zhanghaowei@tju.edu.cn"
+  github: "https://github.com/Wayne299"
+  # linkedin: xxx
+  # zhihu: xxx
+  # weibo: "http://weibo.com/star0514"
+  # google: "https://plus.google.com/u/0/115378822919090728542"
+  # twitter: "#"
+  # facebook: "https://www.facebook.com/xing.liu.5688"
+  # rss: /atom.xml
+  # pinterest: "#"
+  QQ: "tencent://message/?uin=673156454"
+  # wechat: "#"
+  # douban: "#"
+  # pinboard: "#"
+  # stackoverflow: "#"
+  # Instagram: "#"
+  # segmentfault: "https://segmentfault.com/u/s1ngs1ng"
+
+# >>> Conments 评论系统 <<<
+# Chose ONE as your comment system and keep others disable.
+# 选一个作为网站评论系统，其他保持禁用。
+
+# disqus: 
+  # on: true
+  # shortname: singsing-io-blog
+  # https://help.disqus.com/customer/en/portal/articles/466208-what-s-a-shortname-
+  # It is unnecessary to enable disqus here if 
+  # you have set "disqus_shortname" in your site's "_config.yml" 
+
+# duoshuo: 
+#   on: true
+#   domain:
+#   domain: singsing
+  # 是否开启多说评论，http://duoshuo.com/create-site/
+  # 使用上面网址登陆你的多说，然后创建站点，在 domain 中填入你设定的域名前半部分
+  # http://<要填的部分>.duoshuo.com (domain只填上<>里的内容，不要填整个网址)
+
+# youyan:
+  #on: true
+  # id: 
+  # 是否开启友言评论，http://www.uyan.cc/index.php
+  # id 中填写你的友言用户数字ID，注册后进入后台管理即可查看
+  # 友言服务在 Web 环境下运行，普通本地环境无法查看，请部署后在线上测试。
+
+
+# >>> Style Customisation 样式自定义 <<<
+
+# Background | 背景
+## "background_sum": show images form /source/background/的图片数目
+## "on: true": 自动随机显示这5张图片
+## "on: false": 自定义显示图片设置background_image: 5
+background:
+  on: true
+  #on: false
+  background_sum: 8
+  background_image: 8
+
+highlight_style:
+  on: true
+  inline_code: Wayne
+  code_block: 6
+  # Set inline_code to style highlight text
+  # Chose a highlight theme for code block
+  # 通过 inline_code 切换内置文本高亮样式 Value: 0 - 9 可选
+  # 通过 code_block 切换内置代码高亮配色主题  Value: 0 - 4 
+
+blockquote_style:
+  #on: true
+  blockquote: 1  # Value: 0 - 7 可选
+  # 自定义文章「引用部分」的样式
+
+# 左边栏宽度 px
+left_col_width: 300
+
+# 目录中标题不换行
+# Keep TOC title on the same line | 
+toc_nowrap: false
+
+# 自定义"阅读全文"链接按钮的显示文字
+# Customize the text on excerpt link
+excerpt_link: Show More #修改more>>的文字
+
+# 是否显示边栏中的搜索框（仅样式，未添加搜索功能）
+# Search Box in left column
+# search_box: true
+
+# 是否开启主页及加载头像时的动画效果
+# Animation in Homepage and Loading avatar
+animate: true
+
+
+# >>> Small features | 小功能设置 <<<
+
+# 是否开启边栏多标签切换
+# Birdhouse button in left column
+tagcloud: true
+
+# Blogroll, Link exchange | 友情链接
+# friends: false
+friends:
+  # luuman: http://luuman.github.io/
+  # 浮生: http://www.fengchenguyi.com/
+
+# 打赏
+# 请在需要打赏的文章的md文件头部，设置属性reward: true
+
+# Commented out - S1ngS1ng
+# 打赏基础设定：0-关闭打赏； 1-文章对应的md文件里有reward:true属性，才有打赏； 2-所有文章均有打赏
+#reward_type: 2
+# 打赏wording
+#reward_wording1: '纯属好玩'
+#reward_wording2: '扫码打赏，你说多少就多少'
+# 支付宝二维码图片地址，跟你设置头像的方式一样。比如：/img/alipay.jpg
+#alipay: /img/alipay.png
+# 微信二维码图片地址
+#weixin: /img/weixin.png
+
+#是否开启“关于我”。
+aboutme: GOAT💪💪💪
+#aboutme: false
+
+# 是否在新窗口打开链接
+# Open ALL link in a new tab
+open_in_new: false
+
+# Customize feed link 自定义订阅地址
+# rss: /atom.xml
+
+
+# >>> Vendors | 第三方工具 & 服务 <<<
+
+# images viewer | 图片浏览器
+## http://www.fancyapps.com/fancybox/
+fancybox: true
+
+# Display Math(LaTeX, MathML...) | 数学公式支持
+## https://www.mathjax.org/
+mathjax: false
+
+# Socail Share | 是否开启分享
+# share: true
+baidushare: true
+#showshare: true
+
+# 百度、谷歌站长验证。填写 HTML 标签 content
+# Site Verification for Google and Baidu. HTML label content.
+google_site: # pFW527fHrjfI0si2w4NQ0w3cTw12AvvuohAu1PUfqKA
+baidu_site: #c167b9feb4f0b208b712c79629c188e4
+
+# Fill in Google Analytics tracking ID, #e.g. UA-XXXXX-X, or Baidu Analytics hash key
+google_analytics: # UA-86282270-1
+baidu_analytics:
+
+# 不蒜子网站计数设置
+# http://ibruce.info/2015/04/04/busuanzi/
+visit_counter:
+  # on: true
+  # site_visit: 大神到访数
+  # page_visit: 本页阅读量
+
+# A标签提示
+TipTitle: true
+
+# Loading
+Loading: true
