@@ -1,13 +1,12 @@
 ---
-title: 'Promises and async/await'
+title: 'Promises & async/await'
 date: 2020-9-7 19:20:43
 categories: 前端
 tags: [The-modern-javascript-tutorial, js-language]
 ---
 
-# Promises and async/await
-##  Promise
-###  Syntax
+#  Promise
+##  Syntax
 
 ```javascript
 let promise = new Promise(function(resolve, reject) {
@@ -30,28 +29,28 @@ let promise = new Promise(function(resolve, reject) {
     * `value`: `resolve(value)` called.
     * `error`: `reject(error)` called.
 
-###  handlers: `then`, `catch`, `finally`
+##  handlers: `then`, `catch`, `finally`
 - If a promise is returned, then JavaScript waits for it to settle and calls next handlers with its result.
 
-####  `.then(result => {}, error => {})`
-####  `.catch(f)`
+###  `.then(result => {}, error => {})`
+###  `.catch(f)`
 - the same as `.then(null, f)`
 
-####  `.finally(f)`
+###  `.finally(f)`
 - the same as `.then(f,f)`
 - good handler for perfprming cleanup.
 
-###  Promises chaining
+##  Promises chaining
 - The `value` (`return value` or `resolve(value)`) that first `.then` returns is passed to the next `.then` handler.
 - Because `promise.then` returns a promise, so we can call the next `.then` on it.
 
-####  Situation
+###  Situation
 * returns a value, `newPromise` gets resolved with the `returned value` as its value;
 * doesn't return anything, `newPromise` gets resolved with an `undefined` value;
 * throws an error, `newPromise` gets rejected with the `thrown error` as its value;
 
 
-###  Returing promises
+##  Returing promises
 - `return new Promise()`: further handlers wait until it settles, and then get its result and pass along.
 
 ```javascript
@@ -67,16 +66,16 @@ new Promise(function (resolve, reject) {
 
 ```
 
-####  .then(f)
+###  .then(f)
 - When passing a function `console.log()` as a parameter to some other function `then()`, the `argument list` of `console.log()` is always ignored
 - because JavaScript picks up the arg-list of passed function automatically. 
 - (*) e.g. `then(console.log)`: pass the parameters of `then` to `console.log()`, so ignore the parentheses.
 
-##  Error handling with promises
+#  Error handling with promises
 - When a promise rejects, the control jumps to the closest rejection handler.
 - So append `.catch` to the end of chain to catch all errors.
 
-###  `.then` versus `.catch`
+##  `.then` versus `.catch`
 `promise.then(f1).catch(f2)` vs. `promise.then(f1, f2)` Are these code fragments equal? 
 
 - no, they are not equal:
@@ -85,7 +84,7 @@ new Promise(function (resolve, reject) {
 - The current `then()` handles the PREVIOUS promise in the chain. 
 - When a promise goes error, throwing in `f1` can only be handled by the NEXT chained handler. 
 
-### rethrowing
+## rethrowing
 
 ```javascript
 // the execution: catch -> catch
@@ -106,11 +105,11 @@ new Promise((resolve, reject) => {
 });
 ```
 
-##  Promise API
-###  Promise.all
+#  Promise API
+##  Promise.all
 - e.g. download several URLs in parallel and process the content once they are all done.
 
-####  syntax
+###  syntax
 `let promise = Promise.all([...promises...])` 
 - not just `[]` any iterable is fine. If any of those objects is not a `promise`, it’s passed to the resulting array “as is” (not change).
 
@@ -122,30 +121,30 @@ new Promise((resolve, reject) => {
 - Trick: map an array of rough data into an array of promises, and wrap that into `Promise.all()`
   * e.g. `url = [...]; request = url.map(url => fetch(url)); Promise.all(request)`
 
-###  Promise.allSettled
+##  Promise.allSettled
 - `Promise.all` is good for “all or nothing” cases, but for `Promise.allSettled` just waits for all promises to settle, regardless of the result.
 
-####  result array
+###  result array
 - `{status:"fulfilled", value:result}` for successful responses
 - `{status:"rejected", reason:error}` for errors.
 
-###  Promise.race
+##  Promise.race
 - Waits only for the **first(fastest) settled promise** and gets its result (or error).
 - all further results/errors are ignored.
 
-#### syntax
+### syntax
 `let promise = Promise.race(iterable)`
 
-### Promise.resolve/reject -- old version
+## Promise.resolve/reject -- old version
 - it is used when a function is expected to return a `promise`.
 - e.g. thenables and functions we want write `loadCached(url).then(...)`, and guarantee to return a `promise`.
 
 
-## Promisification
+# Promisification
 - `promisify(f, manyArgs = false)`
 
-## Microtasks
-### Microtasks queue
+# Microtasks
+## Microtasks queue
 - Promise handlers `.then` `.catch` `.finally` are always asynchronous.
 - So even when a `Promise` is immediately resolved, the code on the lines below `.then` `.catch` `.finally` will still execute before these handlers.
 
@@ -153,11 +152,11 @@ That's because:
 - Execution of a task in this queue is initiated only when nothing else is running.
 - So when a promise is ready, its handlers are put into the queue; they are not executed yet. When the JavaScript engine becomes free from the current code, it takes a task from the queue and executes it.
 
-## Async/await
-### Async functions, `async`
+# Async/await
+## Async functions, `async`
 - `async` before a function means a function always returns a `promise`.
 
-### Await, `await`
+## Await, `await`
 - works ONLY inside `async` functions: `let value = await promise`
 - wait until that promise settles and returns its result.
 
@@ -176,12 +175,12 @@ f();
 
 - It’s just a more elegant syntax of getting the promise result than promise.then, easier to read and write.
 
-#### error handling
+### error handling
 - use a regular `try...catch`.
 - But at the top level of the code, when we’re outside any `async` function, we’re syntactically unable to use `await`, so it’s a normal practice to add `.then/catch`
 - works well with `Promise.all`: `let results = await Promise.all([...])`
 
-#### examples
+### examples
 
 ```javascript
 async function showAvatar() {
@@ -209,7 +208,7 @@ async function showAvatar() {
 showAvatar();
 ```
 
-#### `await` accepts "thenables"
+### `await` accepts "thenables"
 
 ```javascript
 class Thenable {

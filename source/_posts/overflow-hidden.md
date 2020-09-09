@@ -5,7 +5,7 @@ category: 前端
 tags: css
 ---
 
-# overflow:hidden 的作用总结
+# `overflow:hidden` 的作用总结
 ## 一. 溢出隐藏
 - 一般在div中设置后，该元素的内容若超出了给定的宽度和高度属性，那么超出的部分将会被隐藏，不占位。
 

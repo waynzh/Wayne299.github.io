@@ -5,7 +5,9 @@ category: 前端
 tags: Javascript-Jquery-Jon-Duckett
 ---
 
-# UCI js-jquery 学习笔记
+# Javascript & jQuery 学习笔记
+Book: *Interactive Front-End Web Development* Jon Duckett 1st edition
+
 ## Functions, Methods & Objects
 ### Function Expressions
 - Function Declaration
