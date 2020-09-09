@@ -15,7 +15,7 @@ tags: [The-modern-javascript-tutorial, js-language]
   1. writing operation `proxy.test=` sets the value on `target`
   2. reading operation `proxy.test` returns the value from `target`
   3. `for(key in proxy)` returns values from `target`
-
+<!--more-->
 ## traps
 <table>
 	<thead><tr>
