@@ -18,6 +18,7 @@ null > 0   // (1) false
 null == 0  // (2) false
 null >= 0  // (3) true
 ```
+<!--more-->
 
 - `==`equality 和 `> < >= <=`comparisons不同，comparisons将`null`转化为0。
 
