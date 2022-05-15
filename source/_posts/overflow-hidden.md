@@ -1,7 +1,7 @@
 ---
 title: 'overflow:hidden'
 date: 2019-11-21 21:10:31
-category: 前端
+category: FE
 tags: css
 ---
 

@@ -1,8 +1,8 @@
 ---
 title: 'Object Properties Configuration'
 date: 2020-9-2 10:34:41
-categories: 前端
-tags: [The-modern-javascript-tutorial, js-language]
+categories: FE
+tags: [js基础, The-modern-javascript-tutorial]
 ---
 
 # Accessor Property 

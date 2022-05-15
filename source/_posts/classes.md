@@ -1,8 +1,8 @@
 ---
 title: 'Classes'
 date: 2020-8-30 12:20:10
-categories: 前端
-tags: [The-modern-javascript-tutorial, js-language]
+categories: FE
+tags: [js基础, The-modern-javascript-tutorial]
 ---
 
 # Class basic

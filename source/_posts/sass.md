@@ -1,7 +1,7 @@
 ---
 title: 'Sass'
 date: 2020-8-28 8:20:21
-categories: 前端
+categories: FE
 tags: css
 ---
 

@@ -5,16 +5,16 @@
 ## Tags Cloud Page: `hexo new page tags`
 menu:
   博客首页: /
-  作品展示: /works
+  # 作品展示: /works
 # 留言打卡: /about
 # 前端导航: /FrontEndGuide
 # 静心阅读: /tags
 # 光影之路: /instagram
 # 随笔: /tags/随笔
   # 工具控: /tags/Tools
-  Mac 系列: /tags/Mac
-  前端技术: /tags/前端
-  算法学习: /tags/FreeCodeCamp
+  前端学习: /categories/FE
+  问题总结: /tags/问题总结
+  英语学习: /categories/英语
 
 # Link to your avatar | 填写头像地址
 avatar: img/head.jpg

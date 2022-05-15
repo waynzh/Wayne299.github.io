@@ -1,6 +1,8 @@
 ---
 title: Remove
 date: 2019-8-29
+categories: FE
+tags: git
 ---
 # Git中remove操作
 

@@ -1,8 +1,8 @@
 ---
 title: 'Error Handling'
 date: 2020-8-31 11:12:43
-categories: 前端
-tags: [The-modern-javascript-tutorial, js-language]
+categories: FE
+tags: [js基础, The-modern-javascript-tutorial]
 ---
 
 # `throw` operator

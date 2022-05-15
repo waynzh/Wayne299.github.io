@@ -1,8 +1,8 @@
 ---
 title: 'Prototypes / Inheritance'
 date: 2020-9-3 12:11:20
-categories: 前端
-tags: [The-modern-javascript-tutorial, js-language]
+categories: FE
+tags: [js基础, The-modern-javascript-tutorial]
 ---
 
 # Prototypal inheritance

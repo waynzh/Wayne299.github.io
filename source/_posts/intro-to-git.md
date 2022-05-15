@@ -1,6 +1,8 @@
 ---
 title: Intro to Git
 date: 2019-8-20
+categories: FE
+tags: git
 ---
 # Git 语法入门
 

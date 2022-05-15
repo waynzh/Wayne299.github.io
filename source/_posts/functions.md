@@ -1,8 +1,8 @@
 ---
 title: 'Functions'
 date: 2020-9-1 21:20:12
-categories: 前端
-tags: [The-modern-javascript-tutorial, js-language]
+categories: FE
+tags: [js基础, The-modern-javascript-tutorial]
 ---
 
 # Rest parameters & spread syntax

@@ -2,7 +2,7 @@
 
 title: absolute vs relative
 date: 2019-11-16
-category: 前端
+category: FE
 tags: css 
 ---
 

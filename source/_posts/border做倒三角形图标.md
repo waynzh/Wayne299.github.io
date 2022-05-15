@@ -1,7 +1,7 @@
 ---
 title: 'border的部分应用'
 date: 2019-11-30 19:20:43
-category: 前端
+category: FE
 tags: css
 ---
 # border的部分应用

@@ -1,8 +1,8 @@
 ---
 title: 'UCI js-jquery 学习笔记'
 date: 2020-07-09 19:20:43
-category: 前端
-tags: Javascript-Jquery-Jon-Duckett
+category: FE
+tags: [js基础, Javascript-Jquery-Jon-Duckett]
 ---
 
 # Javascript & jQuery 学习笔记

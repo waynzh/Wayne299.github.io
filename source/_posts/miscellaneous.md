@@ -1,8 +1,8 @@
 ---
 title: 'JavaScript Miscellaneous'
 date: 2020-9-9 10:39:21
-categories: 前端
-tags: [The-modern-javascript-tutorial, js-language]
+categories: FE
+tags: [js基础, The-modern-javascript-tutorial]
 ---
 
 # Currying
