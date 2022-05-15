@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Proxy &amp; Reflect | Wayne</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Proxylet proxy &#x3D; new Proxy(target, handler)  target: is an object to wrap, can be anything, including functions. handler: proxy configuration, an object with “traps”, methods that intercept operations">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Proxy &amp; Reflect">
+<meta property="og:url" content="http://yoursite.com/2020/09/09/proxy-reflect/index.html">
+<meta property="og:site_name" content="Wayne">
+<meta property="og:description" content="Proxylet proxy &#x3D; new Proxy(target, handler)  target: is an object to wrap, can be anything, including functions. handler: proxy configuration, an object with “traps”, methods that intercept operations">
+<meta property="article:published_time" content="2020-09-09T02:39:21.000Z">
+<meta property="article:modified_time" content="2022-05-15T13:35:05.107Z">
+<meta property="article:author" content="Wayne">
+<meta property="article:tag" content="The-modern-javascript-tutorial">
+<meta property="article:tag" content="js基础">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+      
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+<a href="https://github.com/Wayne299/Wayne299.github.io" target="_blank" rel="noopener" class="github-corner" aria-label="View Source Code on Github">
+    <svg width="80" height="80" viewBox="0 0 250 250"
+         style="fill:#BA68C8; color:#fff; position: fixed; top: 0; border: 0; left: 0; transform: scale(-1, 1);"
+         aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+<style>
+    a.github-corner > svg {
+        z-index: 100;
+    }
+    .github-corner:hover .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+    }
+    @keyframes octocat-wave {
+        0%, 100% {
+            transform: rotate(0)
+        }
+        20%, 60% {
+            transform: rotate(-25deg)
+        }
+        40%, 80% {
+            transform: rotate(10deg)
+        }
+    }
+    @media (max-width: 500px) {
+        .github-corner:hover .octo-arm {
+            animation: none
+        }
+        .github-corner .octo-arm {
+            animation: octocat-wave 560ms ease-in-out
+        }
+    }
+</style>
+</body>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/head.jpg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/" title="Hi Mate">Wayne</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">菜鸡前端</p>
+        
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">博客首页</a></li>
+                        
+                            <li><a href="/categories/FE">前端学习</a></li>
+                        
+                            <li><a href="/tags/%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93">问题总结</a></li>
+                        
+                            <li><a href="/categories/%E8%8B%B1%E8%AF%AD%E5%AD%A6%E4%B9%A0">英语学习</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl mail" target="_blank" href="mailto:zhanghaowei@tju.edu.cn" title="mail">mail</a>
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/Wayne299" title="github">github</a>
+                            
+                                <a class="fl QQ" target="_blank" href="tencent://message/?uin=673156454" title="QQ">QQ</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Javascript-Jquery-Jon-Duckett/" style="font-size: 10px;">Javascript-Jquery-Jon-Duckett</a> <a href="/tags/The-modern-javascript-tutorial/" style="font-size: 17.5px;">The-modern-javascript-tutorial</a> <a href="/tags/css/" style="font-size: 15px;">css</a> <a href="/tags/git/" style="font-size: 12.5px;">git</a> <a href="/tags/js%E5%9F%BA%E7%A1%80/" style="font-size: 20px;">js基础</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/project/" style="font-size: 10px;">project</a> <a href="/tags/%E6%89%98%E7%A6%8F%E5%86%99%E4%BD%9C/" style="font-size: 10px;">托福写作</a>
+                    </div>
+                </section>
+                
+                
+                
+
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">GOAT💪💪💪</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me">Wayne</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/head.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me">Wayne</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">菜鸡前端</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客首页</a></li>
+                
+                    <li><a href="/categories/FE">前端学习</a></li>
+                
+                    <li><a href="/tags/%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93">问题总结</a></li>
+                
+                    <li><a href="/categories/%E8%8B%B1%E8%AF%AD%E5%AD%A6%E4%B9%A0">英语学习</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="mail" target="_blank" href="mailto:zhanghaowei@tju.edu.cn" title="mail">mail</a>
+                    
+                        <a class="github" target="_blank" href="https://github.com/Wayne299" title="github">github</a>
+                    
+                        <a class="QQ" target="_blank" href="tencent://message/?uin=673156454" title="QQ">QQ</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-proxy-reflect" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2020/09/09/proxy-reflect/" class="article-date">
+      <time datetime="2020-09-09T02:39:21.000Z" itemprop="datePublished">2020-09-09</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Proxy &amp; Reflect
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/FE/">FE</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/The-modern-javascript-tutorial/" rel="tag">The-modern-javascript-tutorial</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js%E5%9F%BA%E7%A1%80/" rel="tag">js基础</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h1><p><code>let proxy = new Proxy(target, handler)</code></p>
+<ol>
+<li><code>target</code>: is an object to wrap, can be anything, including functions.</li>
+<li><code>handler</code>: proxy configuration, an object with “traps”, methods that intercept operations. – e.g. get trap for reading a property of target, set trap for writing a property into target…</li>
+</ol>
+<h2 id="empty-handler"><a href="#empty-handler" class="headerlink" title="empty handler"></a>empty handler</h2><ul>
+<li>As there are no traps, all operations on <code>proxy</code> are forwarded to <code>target</code>.<ol>
+<li>writing operation <code>proxy.test=</code> sets the value on <code>target</code></li>
+<li>reading operation <code>proxy.test</code> returns the value from <code>target</code></li>
+<li><code>for(key in proxy)</code> returns values from <code>target</code><a id="more"></a>
+<h2 id="traps"><a href="#traps" class="headerlink" title="traps"></a>traps</h2><table>
+<thead><tr>
+   <th>Internal Method</th>
+   <th>Handler Method</th>
+   <th>Triggers when…</th>
+</tr></thead>
+<tbody><tr>
+   <td><code>[[Get]]</code></td>
+   <td><code>get</code></td>
+   <td>reading a property</td>
+</tr>
+<tr>
+   <td><code>[[Set]]</code></td>
+   <td><code>set</code></td>
+   <td>writing to a property</td>
+</tr>
+<tr>
+   <td><code>[[HasProperty]]</code></td>
+   <td><code>has</code></td>
+   <td><code>in</code> operator</td>
+</tr>
+<tr>
+   <td><code>[[Delete]]</code></td>
+   <td><code>deleteProperty</code></td>
+   <td><code>delete</code> operator</td>
+</tr>
+<tr>
+   <td><code>[[Call]]</code></td>
+   <td><code>apply</code></td>
+   <td>function call</td>
+</tr>
+<tr>
+   <td><code>[[Construct]]</code></td>
+   <td><code>construct</code></td>
+   <td><code>new</code> operator</td>
+</tr>
+<tr>
+   <td><code>[[GetPrototypeOf]]</code></td>
+   <td><code>getPrototypeOf</code></td>
+   <td><code>Object.getPrototypeOf</code></td>
+</tr>
+<tr>
+   <td><code>[[SetPrototypeOf]]</code></td>
+   <td><code>setPrototypeOf</code></td>
+   <td><code>Object.setPrototypeOf</code></td>
+</tr>
+<tr>
+   <td><code>[[IsExtensible]]</code></td>
+   <td><code>isExtensible</code></td>
+   <td><code>Object.isExtensible</code></td>
+</tr>
+<tr>
+   <td><code>[[PreventExtensions]]</code></td>
+   <td><code>preventExtensions</code></td>
+   <td><code>Object.preventExtensions</code></td>
+</tr>
+<tr>
+   <td><code>[[DefineOwnProperty]]</code></td>
+   <td><code>defineProperty</code></td>
+   <td><code>Object.defineProperty</code>, <code>Object.defineProperties</code></td>
+</tr>
+<tr>
+   <td><code>[[GetOwnProperty]]</code></td>
+   <td><code>getOwnPropertyDescriptor</code></td>
+   <td><code>Object.getOwnPropertyDescriptor</code>, <code>for..in</code>, <code>Object.keys/values/entries</code></td>
+</tr>
+<tr>
+   <td><code>[[OwnPropertyKeys]]</code></td>
+   <td><code>ownKeys</code></td>
+   <td><code>Object.getOwnPropertyNames</code>, <code>Object.getOwnPropertySymbols</code>, <code>for..in</code>, <code>Object/keys/values/entries</code></td>
+</tr></tbody>
+</table>
+
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="default-value-with-get-trap"><a href="#default-value-with-get-trap" class="headerlink" title="default value with get trap"></a>default value with <code>get</code> trap</h2><p>To intercept reading, the <code>handler</code> should have a method <code>get(target, property, receiver)</code>.</p>
+<ol>
+<li><code>target</code>:  is the <code>target</code> object, the one passed as the first argument to <code>new Proxy(target, handler)</code>.</li>
+<li><code>item</code>: property name</li>
+<li><code>receiver</code>: <code>proxy</code> object itself.</li>
+</ol>
+<ul>
+<li>We can use <code>Proxy</code> to implement any logic for “default” values.<ol>
+<li>non-existing array item returns <code>0</code> instead of <code>undefined</code>.</li>
+<li>non-existing key-value returns <code>defaultParse</code> instead of <code>undefined</code>. e.g.</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> dictionary = &#123;</span><br><span class="line">  <span class="string">'Hello'</span>: <span class="string">'Hola'</span>,</span><br><span class="line">  <span class="string">'Bye'</span>: <span class="string">'Adiós'</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">dictionary = <span class="keyword">new</span> <span class="built_in">Proxy</span>(dictionary, &#123;</span><br><span class="line">  <span class="keyword">get</span>(target, item) &#123; <span class="comment">// intercept reading a property from dictionary</span></span><br><span class="line">    <span class="keyword">if</span> (item <span class="keyword">in</span> target) &#123; <span class="comment">// if we have it in the dictionary</span></span><br><span class="line">      <span class="keyword">return</span> target[item]; <span class="comment">// return the translation</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// otherwise, return the non-translated item</span></span><br><span class="line">      <span class="keyword">return</span> item;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">alert( dictionary[<span class="string">'Hello'</span>] ); <span class="comment">// Hola</span></span><br><span class="line">alert( dictionary[<span class="string">'Welcome to Proxy'</span>]); <span class="comment">// Welcome to Proxy (no translation)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Validation-with-“set”-trap"><a href="#Validation-with-“set”-trap" class="headerlink" title="Validation with “set” trap"></a>Validation with “set” trap</h2><p>To intercept setting sth, let’s say we want an array exclusively for numbers. If a value of another type is added, there should be an error.<br><code>set(target, property, value, receiver)</code></p>
+<ol>
+<li><code>target</code>:  is the <code>target</code> object, the one passed as the first argument to <code>new Proxy(target, handler)</code>.</li>
+<li><code>property</code>: property name</li>
+<li><code>value</code>: property value</li>
+<li><code>receiver</code>: <code>proxy</code> object itself, matters only for setter properties.</li>
+</ol>
+<ul>
+<li>The set trap should return <code>true</code> if setting is successful, and <code>false</code> otherwise (triggers TypeError).</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> numbers = [];</span><br><span class="line"></span><br><span class="line">numbers = <span class="keyword">new</span> <span class="built_in">Proxy</span>(numbers, &#123; <span class="comment">// (*)</span></span><br><span class="line">  <span class="keyword">set</span>(target, prop, val) &#123; <span class="comment">// to intercept property writing</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> val == <span class="string">'number'</span>) &#123;</span><br><span class="line">      target[prop] = val;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">numbers.push(<span class="number">1</span>); <span class="comment">// added successfully</span></span><br><span class="line">numbers.push(<span class="string">"test"</span>); <span class="comment">// TypeError ('set' on proxy returned false)</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Don’t forget to return <code>true</code></p>
+<blockquote>
+<p>There are <code>invariants</code> (conditions that must be fulfilled by internal methods and traps) to be held.<br>e.g. <code>set</code> must return <code>true/false</code><br><code>delete</code> must return <code>true</code> if the value was deleted successfully…</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>Built-in func of arrays ins still working</p>
+<blockquote>
+<p><code>proxy</code> doesn’t break anything. </p>
+</blockquote>
+</blockquote>
+<h2 id="Iteration-with-ownKeys-and-getOwnPropertyDescriptor"><a href="#Iteration-with-ownKeys-and-getOwnPropertyDescriptor" class="headerlink" title="Iteration with ownKeys and getOwnPropertyDescriptor"></a>Iteration with <code>ownKeys</code> and <code>getOwnPropertyDescriptor</code></h2><h3 id="ownKeys"><a href="#ownKeys" class="headerlink" title="ownKeys"></a><code>ownKeys</code></h3><p><code>Object.keys</code>, <code>for..in</code> loop and most other methods that iterate over object properties use <code>[[OwnPropertyKeys]]</code> (intercepted by <code>ownKeys</code> trap)</p>
+<ol>
+<li><code>Object.getOwnPropertyNames(obj)</code> returns non-symbol keys.</li>
+<li><code>Object.getOwnPropertySymbols(obj)</code> returns symbol keys.</li>
+<li><code>Object.keys/values()</code> returns non-symbol keys/values with <code>enumerable</code> flag.</li>
+<li><code>for..in</code> loops over non-symbol keys with <code>enumerable</code> flag + prototype keys.</li>
+</ol>
+<ul>
+<li>We can use <code>ownKeys</code> trap to make iteration, like <code>for...in</code> loop, <code>Object.keys</code>, <code>Object.values</code> work differently.</li>
+<li>Let’s say skip properties starting with an underscore <code>_</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> user = &#123;</span><br><span class="line">  name: <span class="string">"John"</span>,</span><br><span class="line">  age: <span class="number">30</span>,</span><br><span class="line">  _password: <span class="string">"***"</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">user = <span class="keyword">new</span> <span class="built_in">Proxy</span>(user, &#123;</span><br><span class="line">  ownKeys(target) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Object</span>.keys(target).filter(<span class="function"><span class="params">key</span> =&gt;</span> !key.startsWith(<span class="string">'_'</span>));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// "ownKeys" filters out _password</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">in</span> user) alert(key); <span class="comment">// name, age</span></span><br><span class="line">alert( <span class="built_in">Object</span>.keys(user) ); <span class="comment">// name,age</span></span><br><span class="line">alert( <span class="built_in">Object</span>.values(user) ); <span class="comment">// John,30</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="getOwnPropertyDescriptor"><a href="#getOwnPropertyDescriptor" class="headerlink" title="getOwnPropertyDescriptor"></a><code>getOwnPropertyDescriptor</code></h3><p>We can use the trap <code>getOwnPropertyDescriptor</code> to intercept calls to <code>[[GetOwnProperty]]</code>, and return a descriptor with <code>enumerable: true</code>.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> user = &#123; &#125;;</span><br><span class="line"></span><br><span class="line">user = <span class="keyword">new</span> <span class="built_in">Proxy</span>(user, &#123;</span><br><span class="line">  ownKeys(target) &#123; <span class="comment">// called once to get a list of properties</span></span><br><span class="line">    <span class="keyword">return</span> [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>];</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  getOwnPropertyDescriptor(target, prop) &#123; <span class="comment">// called for every property</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      enumerable: <span class="literal">true</span>,</span><br><span class="line">      configurable: <span class="literal">true</span></span><br><span class="line">      <span class="comment">/* ...other flags, probable "value:..." */</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">alert( <span class="built_in">Object</span>.keys(user) ); <span class="comment">// a, b, c</span></span><br><span class="line"><span class="string">``</span><span class="string">`  </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">## Protected properties with `</span>deleteProperty<span class="string">`</span></span><br><span class="line"><span class="string">We can use proxies to prevent any access to properties starting with `</span>_<span class="string">`, that conventionally means internal properties and methods.</span></span><br><span class="line"><span class="string">1. `</span><span class="keyword">get</span>` to throw an error when reading such property,</span><br><span class="line">2. `<span class="keyword">set</span>` to throw an error when writing,</span><br><span class="line">3. `deleteProperty` to throw an error when deleting,</span><br><span class="line">4. `ownKeys` to exclude properties starting with `_` from `for..in` and methods like `Object.keys`.</span><br><span class="line"></span><br><span class="line">```js</span><br><span class="line">let user = &#123;</span><br><span class="line">  name: <span class="string">"John"</span>,</span><br><span class="line">  _password: <span class="string">"***"</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">user = <span class="keyword">new</span> <span class="built_in">Proxy</span>(user, &#123;</span><br><span class="line">  <span class="keyword">get</span>(target, prop) &#123;</span><br><span class="line">    <span class="keyword">if</span> (prop.startsWith(<span class="string">'_'</span>)) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"Access denied"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> value = target[prop];</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">typeof</span> value === <span class="string">'function'</span>) ? value.bind(target) : value; <span class="comment">// (*)</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="keyword">set</span>(target, prop, val) &#123; <span class="comment">// to intercept property writing</span></span><br><span class="line">    <span class="keyword">if</span> (prop.startsWith(<span class="string">'_'</span>)) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"Access denied"</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      target[prop] = val;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  deleteProperty(target, prop) &#123; <span class="comment">// to intercept property deletion</span></span><br><span class="line">    <span class="keyword">if</span> (prop.startsWith(<span class="string">'_'</span>)) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"Access denied"</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">delete</span> target[prop];</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  ownKeys(target) &#123; <span class="comment">// to intercept property list</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Object</span>.keys(target).filter(<span class="function"><span class="params">key</span> =&gt;</span> !key.startsWith(<span class="string">'_'</span>));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="in-range-with-has-trap"><a href="#in-range-with-has-trap" class="headerlink" title="in range with has trap"></a><code>in range</code> with <code>has</code> trap</h2><h2 id="Wrapping-functions-apply"><a href="#Wrapping-functions-apply" class="headerlink" title="Wrapping functions: apply"></a>Wrapping functions: <code>apply</code></h2><h2 id="Reflect"><a href="#Reflect" class="headerlink" title="Reflect"></a><code>Reflect</code></h2><h1 id="Proxy-limitations"><a href="#Proxy-limitations" class="headerlink" title="Proxy limitations"></a>Proxy limitations</h1><h1 id="Revocable-proxies"><a href="#Revocable-proxies" class="headerlink" title="Revocable proxies"></a>Revocable proxies</h1>
+      
+      
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2020/09/09/proxy-reflect/">Proxy &amp; Reflect</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 Wayne 的个人博客">Wayne</a></p>
+        <p><span>发布时间:</span>2020年09月09日 - 10时39分</p>
+        <p><span>最后更新:</span>2022年05月15日 - 21时35分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2020/09/09/proxy-reflect/" title="Proxy &amp; Reflect">http://yoursite.com/2020/09/09/proxy-reflect/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2020/09/09/proxy-reflect/　　作者: Wayne" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2020/09/09/miscellaneous/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          JavaScript Miscellaneous
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/09/09/modules/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Modules</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Proxy"><span class="toc-number">1.</span> <span class="toc-text">Proxy</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#empty-handler"><span class="toc-number">1.1.</span> <span class="toc-text">empty handler</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#traps"><span class="toc-number">1.2.</span> <span class="toc-text">traps</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#default-value-with-get-trap"><span class="toc-number">1.3.</span> <span class="toc-text">default value with get trap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Validation-with-“set”-trap"><span class="toc-number">1.4.</span> <span class="toc-text">Validation with “set” trap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Iteration-with-ownKeys-and-getOwnPropertyDescriptor"><span class="toc-number">1.5.</span> <span class="toc-text">Iteration with ownKeys and getOwnPropertyDescriptor</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ownKeys"><span class="toc-number">1.5.1.</span> <span class="toc-text">ownKeys</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#getOwnPropertyDescriptor"><span class="toc-number">1.5.2.</span> <span class="toc-text">getOwnPropertyDescriptor</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#in-range-with-has-trap"><span class="toc-number">1.6.</span> <span class="toc-text">in range with has trap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Wrapping-functions-apply"><span class="toc-number">1.7.</span> <span class="toc-text">Wrapping functions: apply</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reflect"><span class="toc-number">1.8.</span> <span class="toc-text">Reflect</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Proxy-limitations"><span class="toc-number">2.</span> <span class="toc-text">Proxy limitations</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Revocable-proxies"><span class="toc-number">3.</span> <span class="toc-text">Revocable proxies</span></a></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2020/09/09/miscellaneous/" title="上一篇: JavaScript Miscellaneous">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2020/09/09/modules/" title="下一篇: Modules">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/09/24/L01-job/">黎老师托福写作01——Job</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/09/miscellaneous/">JavaScript Miscellaneous</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/09/proxy-reflect/">Proxy & Reflect</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/09/modules/">Modules</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/08/generators-advanced-iteration/">Generators & Advanced iteration</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/07/promises-async-await/">Promises & async/await</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/03/prototypes-inheritance/">Prototypes / Inheritance</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/02/object-properties-config/">Object Properties Configuration</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/01/functions/">Functions</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/31/error-handling/">Error Handling</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/30/classes/">Classes</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/29/basic-and-data-types/">Basic and Data types</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/28/sass/">Sass</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/09/js-jquery-uci/">UCI js-jquery 学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/30/border%E5%81%9A%E5%80%92%E4%B8%89%E8%A7%92%E5%BD%A2%E5%9B%BE%E6%A0%87/">border的部分应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/30/first-child/">first-child易错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/21/overflow-hidden/">overflow:hidden</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/18/tmall-website/">tmall website</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/16/absolute-vs-relative/">absolute vs relative</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/05/inline-block-vs-float/">Inline-block vs Float</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/29/git-remove/">Remove</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/29/hello-world/">Hexo Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/20/intro-to-git/">Intro to Git</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/30/markdown-intro/">MarkDown Syntax Intro</a></li></ul>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2022 Wayne
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 8;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>
