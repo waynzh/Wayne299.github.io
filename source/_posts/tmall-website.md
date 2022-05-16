@@ -2,7 +2,7 @@
 title: tmall website
 date: 2019-11-18 21:48:24
 category: FE
-tags: [project]
+tags: [project, css]
 ---
 # 天猫网站前端设计
 [GitHub](https://github.com/Wayne299/tmall-website)同步训练，搭建完成前记录效果截图。

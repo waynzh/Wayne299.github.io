@@ -8,9 +8,26 @@ tags: [js基础, The-modern-javascript-tutorial]
 # Basic JavaScript
 ## Comparison
 ### null and undefined
+- null 是空值，即初始时表示值为空，之后再赋值
+- undefined 是 未定义
+
 - `null == undefined // true` 除此之外他们和其他任何只都是false
 - `+null = 0`
 - `+undefined = NaN`
+
+<!--more-->
+
+```js
+null + 4 // 4
+{} + 4 // 4
+undefined + 4 // NaN
+[] + 4 // "4"
+"" + 4 // "4"
+
+null == undefined // true 除此之外他们和其他任何只都是false
++null == 0
++undefined == NaN
+```
 
 ### null vs 0
 ``` javascript
@@ -18,26 +35,30 @@ null > 0   // (1) false
 null == 0  // (2) false
 null >= 0  // (3) true
 ```
-<!--more-->
 
 - `==`equality 和 `> < >= <=`comparisons不同，comparisons将`null`转化为0。
 
 ## Logical Operator
-- `&&`: find the first falsy value; 如果第一个是true，则返回第二个
+### `~`
+- 加一取反：`~0 = -1`
+
+### `&&`
+- `&&`: find the first falsy value; 如果第一个是true，则返回第二个; 错误的话返回第一个错误
  
 ``` javascript
-1 && 0  // return 0
 2 && 3  // return 3 
+1 && 0  // return 0
 ```
   
+### `||`   
 - `||`: find the first truthy value; 都是false返回最后一个
 
 ``` javascript
 1 || 0  // return 1 (后一个不执行)
 null || 2  // return 
-  
 ```
 
+### `??` 
 - `??`:  select the first “defined” variable. 
 - Forbidden to use it together with `&&` and `||` operators, except use explicit parentheses.
  
@@ -58,10 +79,39 @@ showCount(); // unknown
 ``` 
 
 ## Object
-### A primitive as an object
-#### Objects are “heavier” than primitives
-- `user.sayHi()` is “heavier” than `str.toUpperCase()`
+### 属性
+- 所有键名(key/也称为属性property或方法) 都是字符串(也有Symbol), 所以加不加引号都行:
+  ```js
+  var obj = {
+      1: "a",
+      3.3: "b",
+      <!-- 不符合标识名的条件 -->
+      "1p": "必须加引号"
+  }
 
+  obj[1] == "a"
+  obj["1"] == "a"
+  ``` 
+
+- 变量指向对象，是指向了一个内存地址。
+  - 不同的变量名指向同一个对象，那么它们都是这个对象的引用
+  - 取消某一个变量对于原对象的引用，不会影响到另一个变量
+- 点运算符：直接表示字符串属性，不需加引号。
+  > ※ 数字属性不能用点运算符 
+- 方括号运算符: 需要加引号，否则识别成一个变量
+  > `obj["foo"] !== obj[foo]` 
+- 删除属性：`delete obj.p // true`
+  > 无法删除继承的属性 
+  > 只有`configurable: false` 时，返回false
+
+#### 判断是否为自身属性
+- `obj.hasOwnProperty('toString')) // false`
+- `'toString' in obj // true`
+- `for (var p in obj)`
+  > 遍历可遍历（enumerable）的属性，跳过不可遍历的属性
+  > 自身的和继承的都显示
+
+### A primitive as an object
 #### Always truthy
 
 ```javascript 
@@ -71,7 +121,6 @@ if (zero) { // zero is true, because it's an object
   alert( "zero is truthy!?!" );
 }
 ```
-
 
 ### Computed Properties
 - We can use square brackets in an object literal, when creating an object.
@@ -200,6 +249,10 @@ alert( Symbol.keyFor(sym2) ); // id
 
 ## Numbers
 -  in hex (0x), octal (0o) and binary (0b) systems.
+-  NaN不等于任何值：`NaN !== NaN`
+- `0/0 // NaN`
+- Infinity大于一切数值（除了NaN），-Infinity小于一切数值（除了NaN）
+- `0 * Infinity // NaN`
 
 ### `toString(base)`
 
@@ -217,6 +270,15 @@ alert( 123456..toString(36) ); // 2n9c
 - `0.1 + 0.2 !== 0.3` solution:
   - `toFixed(n)`: `sum.toFixed(2) // "0.30" ` -> string convenient to `"$0.30"` / or coerce it into a number use the unary plus `+`.
 
+### `Number()`
+```js
+Number([]) // 0
+Number([123]) // 123
+Number({}) // NaN
+Number(null) // 0
+Number(undefined) // NaN
+```
+
 ### Finite & NaN
 - `isNaN("1") // false` 
 - `NaN === NaN // false`  
@@ -224,17 +286,50 @@ alert( 123456..toString(36) ); // 2n9c
   - `Object.is(NaN, NaN) === true`
   - `Object.is(0, -0) === false`
 
+### `isNaN()`
+```js
+// 只对数值有效，如果传入其他值，会被先转成数值
+isNaN("123") // false
+
+// 空数组 和 只有一个数值成员的数组
+isNaN([]) // false
+isNaN([123]) // false
+isNaN(['123']) // false
+isNaN(Number({})) // true
+isNaN(Number(['xzy'])) // true
+```
+
 ### parseInt & parseFloat
 - `parseInt(str, base);`
 
-```javascript
-alert( parseInt('100px') ); // 100
-alert( parseFloat('12.5em') ); // 12.5
+```js
+parseInt('+') // NaN
+parseInt('+1') // 1
+parseInt('0x10') // 以0x开头的16进制：16 
+parseInt('011') // 以0开头 忽略掉0 ：11
 
-alert( parseInt('12.3') ); // 12
-alert( parseFloat('12.3.4') ); // 12.3
+// 自动转换为科学计数法的会有错误
+parseInt(0.0000008) // 8 
+parseInt('8e-7') // 等同于：8
 
-alert( parseInt('a123') ); // NaN, "a" stops the process.
+// 2-36有效
+parseInt('10', 37) // NaN
+parseInt('10', 1) // NaN
+
+// 不是数值，会被自动转为一个整数
+// 0、undefined和null，则直接忽略
+parseInt('10', 0) // 10
+parseInt('10', null) // 10
+
+// 第一个参数不是字符串，会被先转为字符串
+parseInt(0x11, 2) // 1
+parseInt(011, 2) // NaN
+// 等同于
+parseInt(String(0x11), 2) // 按十六进制
+parseInt(String(011), 2) // 按八进制
+// 等同于
+parseInt('17', 2) // 1
+parseInt('9', 2)
 ```
 
 
@@ -299,6 +394,12 @@ for (let char of "Hello") {
 - `for...in`: its index, e.g. `for key in arr`.  -- never use in Array, but Object
   * It iterates over all properties, not only the numeric ones.
 
+### 空位 和 undefined 区别
+- `delete` 删除某位后形成空位, 对 `length` 没有影响: `[,,,]`
+- 空位都会**被跳过**: `forEach` 方法、`for...in`结构、以及`Object.keys`方法进行遍历
+- `undefined`**不会跳过**: `[undefined,undefined,undefined]`
+
+
 ### Add & delete
 #### 首位插入： `unshift`
 #### 首位删除： `shift`
@@ -320,8 +421,9 @@ alert( arr ); // 1,2,3,4,5
 ```
  
 #### `slice(start[, end)` 
+- `start`从1开始；slice(0)是浅拷贝
 - 返回选择的·新·的数组，不改变原数组。
-- Negative values are availible.
+- **Negative values** are availible.
 
 ### Searching
 #### `arr.some(func)` / `arr.every(func)`

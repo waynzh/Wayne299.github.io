@@ -831,7 +831,7 @@ hexo-util@^1.0.0, hexo-util@^1.4.0, hexo-util@^1.9.1:
     strip-indent "^3.0.0"
     striptags "^3.1.1"
 
-hexo@^4.0.0:
+hexo@^4.2.1:
   version "4.2.1"
   resolved "http://r.npm.sankuai.com/hexo/download/hexo-4.2.1.tgz#2aa1d4428b0ade23bac34f546a387b36432dd81c"
   integrity sha1-KqHUQosK3iO6w09Uajh7NkMt2Bw=

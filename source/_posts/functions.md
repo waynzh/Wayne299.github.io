@@ -2,10 +2,65 @@
 title: 'Functions'
 date: 2020-9-1 21:20:12
 categories: FE
-tags: [js基础, The-modern-javascript-tutorial]
+tags: [js基础, The-modern-javascript-tutorial, 总结, 面试题, 闭包]
 ---
 
-# Rest parameters & spread syntax
+## 函数定义
+- 采用**function命令**声明函数会提升。**赋值语句**定义函数不会
+- 具名函数只能在函数内部调用, 赋值后就没有意义
+  - `name` 属性会返回具名函数 `function`字段后的名称
+  ```js
+  var f3 = function myName() {};
+  f3.name // 'myName'
+  ```
+
+## 函数的作用域
+- 作用域与变量一样, 就是其声明时所在的作用域，与其运行时所在的作用域无关。
+- 形成**闭包**现象
+<!--more-->
+
+```js
+var a = 1;
+var x = function () {
+  console.log(a);
+};
+function f() {
+  var a = 2;
+  x();
+}
+
+f() // 1
+```
+
+- 与传入参数不同
+```js
+var a = 1;
+var x = function (a) {
+  console.log(a);
+};
+function f() {
+  var a = 2;
+  x(a);
+}
+
+f() // 2
+```
+
+## 参数
+- 传入基础类型是**值传递**, 不会改变全局的值
+- 传入对象是**地址传递**，更改形参的属性，实参的属性也会变。
+  > 如果替换掉整个参数，这时不会影响到原始值
+  > ∵ 将形参指向了另一个地址，故不会改变原地址的内容
+
+### 同名参数
+- 取最后出现的那个值。
+```js
+function f(a, a) {
+  console.log(a);
+}
+f(1) // undefined
+```
+
 ## Rest parameters, `...`
 
 ```js
@@ -23,9 +78,11 @@ alert( sumAll(1, 2, 3) ); // 6
 ```
 
 ## `arguments` variable --old version
-<!--more-->
 - it's iterable and array-like.
 - Arrow functions do NOT have `arguments`, it takes the outer function.
+
+#### callee
+- 返回它所对应的原函数
 
 ## Spread syntax `...arr`
 - When `...arr` is used in the function call, it “expands” an iterable object `arr` into the list of arguments.
@@ -59,10 +116,26 @@ let obj = { a: 1, b: 2, c: 3 };
 let objCopy = { ...obj };  // different reference
 ```
 
-# Closure
-- Defination:  a function that remembers its outer variables and can access them.
+## Closure 闭包
+```js
+function f1() {
+  var n = 999;
+  function f2() {
+    console.log(n);
+  }
+  return f2;
+}
+f1()(); // 999
+```
+
+- 闭包就是函数f2: 能够读取其他函数内部变量的函数. A function that remembers its outer variables and can access them.
 - in JavaScript, all functions are naturally closures (there is only one exception, to be covered in The "new Function" syntax).
 -  they automatically remember where they were created using a hidden `[[Environment]]` property, and then their code can access outer variables.
+- 其两大特点：
+  1. 可以读取函数内部的变量另一个就是
+  2. 让这些变量始终保持在内存中，即闭包可以使得它诞生环境一直存在
+  3. 封装对象的私有属性和私有方法
+
 
 ## Confusing issue
 
@@ -195,7 +268,7 @@ slow = cachingDecorator(slow);  // use cache
 - But not suitable for `Object`, because without the context `this`
 - `Object` need to use `func.call()` method.
 
-####for Object `func.call(this, ...args)`
+#### for Object `func.call(this, ...args)`
 
 ```javascript
 function say(phrase) {
@@ -235,7 +308,7 @@ hash(1, 2);
 
 - Usually used in taking **array methods** and apply them to `arguments`
 
-## Example ??
+## Example
 - Debounce decorator: runs the function once after the “cooldown” period. Good for processing the final result. e.g. show the result of typing.
 
 ```javascript
