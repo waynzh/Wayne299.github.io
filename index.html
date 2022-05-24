@@ -290,18 +290,29 @@
 </ul>
 </li>
 </ul>
-<h2 id="Ref-自动解包"><a href="#Ref-自动解包" class="headerlink" title="Ref 自动解包"></a>Ref 自动解包</h2><ol>
-<li><p><code>watch</code> 直接接受 Ref 作为监听对象，回调中为解包后的值</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> counter = ref(<span class="number">0</span>)</span><br><span class="line">watch(counter, count =&gt; &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(count); <span class="comment">// same as `counter.value`</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用 Reactive 解包嵌套的 Ref</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> foo = ref(<span class="string">'bar'</span>)</span><br><span class="line"><span class="keyword">const</span> data = reactive(&#123;</span><br><span class="line">	foo,</span><br><span class="line">	id: <span class="number">10</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">data.foo <span class="comment">// 'bar'</span></span><br></pre></td></tr></table></figure>
-
-
-
+<h2 id="Ref-自动解包"><a href="#Ref-自动解包" class="headerlink" title="Ref 自动解包"></a>Ref 自动解包</h2><ul>
+<li><code>watch</code> 直接接受 Ref 作为监听对象，回调中为解包后的值  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> counter = ref(<span class="number">0</span>)</span><br><span class="line">watch(counter, count =&gt; &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(count); <span class="comment">// same as `counter.value`</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
 </li>
-</ol>
+</ul>
+<h2 id="接受-Ref-作为函数参数【模式】"><a href="#接受-Ref-作为函数参数【模式】" class="headerlink" title="接受 Ref 作为函数参数【模式】"></a>接受 Ref 作为函数参数【模式】</h2><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a: Ref&lt;<span class="built_in">number</span>&gt;, b: Ref&lt;<span class="built_in">number</span>&gt;</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> computed(<span class="function"><span class="params">()</span> =&gt;</span> a.value + b.value)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>进阶可以同时接受传入值和Ref<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">	a: Ref&lt;<span class="built_in">number</span>&gt; | <span class="built_in">number</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">	b: Ref&lt;<span class="built_in">number</span>&gt; | <span class="built_in">number</span></span></span></span><br><span class="line"><span class="function"><span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> computed(<span class="function"><span class="params">()</span> =&gt;</span> unref(a) + unref(b))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> a = ref(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">const</span> c = add(a, <span class="number">5</span>) <span class="comment">// 可以省一些 `.value` 操作</span></span><br><span class="line">c.value = <span class="number">6</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<h2 id="MaybeRef【技巧】"><a href="#MaybeRef【技巧】" class="headerlink" title="MaybeRef【技巧】"></a>MaybeRef【技巧】</h2><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> MaybeRef&lt;T&gt; = Ref&lt;T&gt; | T</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">	a: MaybeRef&lt;<span class="built_in">number</span>&gt;,</span></span></span><br><span class="line"><span class="function"><span class="params">	b: MaybeRef&lt;<span class="built_in">number</span>&gt;</span></span></span><br><span class="line"><span class="function"><span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> computed(<span class="function"><span class="params">()</span> =&gt;</span> unref(a) + unref(b)) <span class="comment">// unref 之后一定是 T</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>不需要管是否嵌套，<code>ref</code>和<code>unref</code>都可以获得想要的值</li>
+</ul>
+<h3 id="重复使用已有-Ref【技巧】"><a href="#重复使用已有-Ref【技巧】" class="headerlink" title="重复使用已有 Ref【技巧】"></a>重复使用已有 Ref【技巧】</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> foo = ref(<span class="number">1</span>)  <span class="comment">// Ref&lt;1&gt;</span></span><br><span class="line"><span class="keyword">const</span> bar = ref(foo) <span class="comment">// Ref&lt;1&gt;</span></span><br><span class="line"></span><br><span class="line">foo === bar <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="unref【技巧】"><a href="#unref【技巧】" class="headerlink" title="unref【技巧】"></a>unref【技巧】</h3><ul>
+<li>可以作为重置ref值时使用。∵ 不需要管是否isRef</li>
+</ul>
 
       
       
