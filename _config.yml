@@ -96,5 +96,5 @@ theme: spfk-new
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/Wayne299/Wayne299.github.io.git
+  repo: https://github.com/waynzh/waynzh.github.io.git
   branch: master
