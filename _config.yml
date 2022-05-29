@@ -97,4 +97,4 @@ theme: spfk-new
 deploy:
   type: git
   repo: https://github.com/waynzh/waynzh.github.io.git
-  branch: master
+  branch: gh-pages
