@@ -22,7 +22,7 @@ tags: [笔记, vue]
 		console.log(count); // same as `counter.value`
 	})
 	```
-<!--more-->
+<!-- more -->
 
 ## 接受 Ref 作为函数参数【模式】
 ```ts
