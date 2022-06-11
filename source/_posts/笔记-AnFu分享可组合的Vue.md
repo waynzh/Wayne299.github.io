@@ -24,6 +24,17 @@ tags: [笔记, vue]
 	```
 <!-- more -->
 
+- reactive包含ref，直接修改ref，都会变化
+```js
+	const counter = ref(0)
+	const searchParams = ref({
+		count: counter // 不解构直接用ref
+	})
+
+	counter.value++ // counter: 1  searchParams.count: 1
+```
+[参考Vue文档](https://staging-cn.vuejs.org/guide/essentials/reactivity-fundamentals.html#ref-unwrapping-in-reactive-objects)
+
 ## 接受 Ref 作为函数参数【模式】
 ```ts
 function add(a: Ref<number>, b: Ref<number>) {
