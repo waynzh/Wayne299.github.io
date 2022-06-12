@@ -3,6 +3,7 @@
 # Header | 主菜单
 ## About Page: `hexo new page about`
 ## Tags Cloud Page: `hexo new page tags`
+author: Wayne
 menu:
   博客首页: /
   # 作品展示: /works

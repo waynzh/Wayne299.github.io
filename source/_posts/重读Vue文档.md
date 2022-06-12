@@ -8,7 +8,7 @@ tags: [笔记, vue, 总结]
 # Ref & Reactive
 ## Ref Unwrapping in Reactive Objects
 [参考Vue文档](https://vuejs.org/guide/essentials/reactivity-fundamentals.html#ref-unwrapping-in-reactive-objects)
-- reactive包含ref，直接修改ref，都会变化
+reactive包含ref，直接修改ref，都会变化
 ```js
 	const counter = ref(0)
 	const searchParams = ref({
@@ -21,26 +21,27 @@ tags: [笔记, vue, 总结]
 # Conditional Rendering
 [参考Vue文档](https://vuejs.org/guide/essentials/conditional.html#v-if-on-template)
 ## `v-if` on `<template>`
-- 控制包含多个元素时，可以用 `<template>` 包裹（渲染出来时不包含template元素），∴不需要再套一层`div`
-	```html
-	<template v-if="ok">
-	  <h1>Title</h1>
-	  <p>Paragraph 1</p>
-	  <p>Paragraph 2</p>
-	</template>
-	```
+控制包含多个元素时，可以用 `<template>` 包裹（渲染出来时不包含template元素），∴不需要再套一层`div`
+```html
+<template v-if="ok">
+  <h1>Title</h1>
+  <p>Paragraph 1</p>
+  <p>Paragraph 2</p>
+</template>
+```
+<!-- more -->
 
-- `v-show`不支持写在 `<template>`上
+`v-show`不支持写在 `<template>`上
 
 ## `v-if` with `v-for`
 - vue3：`v-if` > `v-for`
 - vue2：`v-if` < `v-for`
-<!-- more -->
+
 
 # List Rendering
 [参考Vue文档](https://vuejs.org/guide/essentials/list.html#v-for-with-an-object)
 ## `v-for` with an Object
-- 顺序依据的是 `Object.keys()`
+顺序依据的是 `Object.keys()`
 ```html
 <li v-for="(value, key, index) in myObject" :key="value">
   {{ index }}. {{ key }}: {{ value }}

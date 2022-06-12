@@ -74,7 +74,6 @@ require([], function (){
 
         require([yiliaConfig.rootUrl + 'js/jquery.lazyload.js'], function(){
             //avatar
-            $(".js-avatar").attr("src", $(".js-avatar").attr("lazy-src"));
             $(".js-avatar")[0].onload = function(){
                 $(".js-avatar").addClass("show");
             }
