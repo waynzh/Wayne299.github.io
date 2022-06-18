@@ -38,6 +38,15 @@ reactive包含ref，直接修改ref，都会变化
 - vue2：`v-if` < `v-for`
 
 
+# Dynamic Arguments
+[参考Vue文档](https://vuejs.org/guide/essentials/template-syntax.html#directives)
+##  Value Constraints
+`string | null`
+
+##  Syntax Constraints
+- html attribute names 不能有空格和引号。∴ 可以用computed来代替直接写在template中。
+- 直接使用in-DOM template时（直接写在hmtl文件里的），要避免大写字母。∵ 浏览器会强制转为小写
+
 # List Rendering
 [参考Vue文档](https://vuejs.org/guide/essentials/list.html#v-for-with-an-object)
 ## `v-for` with an Object
@@ -230,6 +239,184 @@ const emit = defineEmits<{
 </script>
 ```
 
+# Components In-Depth
+推荐写法：组件名用 PascalCase，prop用 kebab-case
+```html
+<MyComponent greeting-message="hello" />
+```
+
+## Binding Multiple Properties Using an Object
+不加参数直接绑定object，相当于分别绑定：
+
+```html
+<script setup lang="ts">
+const post = {
+  id: 1,
+  title: 'My Journey with Vue'
+}
+</script>
+
+<template>
+<!-- 不加参数直接绑定object -->
+<BlogPost v-bind="post" />
+
+<!-- 相当于分别绑定 -->
+<BlogPost :id="post.id" :title="post.title" />
+</template>
+```
+
+## Events
+[参考Vue文档](https://vuejs.org/guide/components/events.html#usage-with-v-model)
+### 最佳实践
+组件的双向传值的两种最佳实现：
+	1. 父组件 `v-model="value"`，自组件分别绑定值和事件
+	2. 子组件 `v-model="value"`绑定值，并利用 `computed` 设置`get()` 和 `set()`计算值
+
+```html
+<!-- CustomInput.vue -->
+<script setup>
+defineProps(['modelValue'])
+defineEmits(['update:modelValue'])
+</script>
+
+<template>
+  <input
+    :value="modelValue"
+    @input="$emit('update:modelValue', $event.target.value)"
+  />
+</template>
+
+<!-- index.vue -->
+<CustomInput v-model="searchText" />
+
+<!-- 相当于 -->
+<CustomInput
+  :modelValue="searchText"
+  @update:modelValue="newValue => searchText = newValue"
+/>
+```
+
+```html
+<!-- CustomInput.vue -->
+<script setup>
+const props = defineProps(['modelValue'])
+const emit = defineEmits(['update:modelValue'])
+
+const value = computed(() => {
+	get() {
+		return props.modelValue
+	},
+	set(val) {
+		emit('update:modelValue', val)
+	}
+})
+</script>
+
+<template>
+  <input v-model="value" />
+</template>
+```
+
+### `v-model` arguments
+- by default: `modelValue` 为 prop，`update:modelValue` 为emit事件
+- 添加一个变量作为指定的prop：
+
+```html
+<!-- index.vue -->
+<MyComponent v-model:title="bookTitle" />
+
+<!-- MyComponent.vue -->
+<script setup>
+defineProps(['title'])
+defineEmits(['update:title'])
+</script>
+```
+
+### Handling `v-model` modifiers
+- by default: `v-model="value"`， 会有一个`modelModifiers` 的prop
+- 添加一个变量后: `v-model:title="value"`，props中modifiers 的规则为`arg+"Modifiers"`
+
+```html
+<!-- index.vue -->
+<MyComponent v-model.capitalize="text" />
+
+<!-- MyComponent.vue -->
+<script setup>
+const props = defineProps({
+  modelValue: String,
+  modelModifiers: { 
+  	type: Object,
+  	default: () => {}
+  }
+})
+
+console.log(props.modelModifiers); // { capitalize: true }
+</script>
+```
+
+```html
+<!-- index.vue -->
+<MyComponent v-model:title.capitalize="text" />
+
+<!-- MyComponent.vue -->
+<script setup>
+const props = defineProps({
+  title: String,
+  titleModifiers: { // `arg + "Modifiers"`
+  	type: Object,
+  	default: () => {}
+  }
+})
+</script>
+```
+
+## Fallthrough Attributes
+### In js: `useAttrs()` / `setup(props, {attrs})`
+- `const attrs = useAttrs()`
+- `setup(props, {attrs}) {}`
+
+### Not reactive
+- 如果需要动态变化，可以使用prop 或者 `onUpdated()`
+
+## Slots
+[参考Vue文档](https://vuejs.org/guide/components/slots.html#named-slots)
+
+### Named Slots
+- 子组件：用name命名slot `<slot name="header">`
+- 父组件：用`v-slot:header` 使用
+
+```html
+<!-- index.vue -->
+<BaseLayout>
+  <template v-slot:header>
+    <!-- content for the “header” slot -->
+  </template>
+</BaseLayout>
+
+<!-- BaseLayout.vue -->
+<div class="container">
+  <header>
+    <slot name="header"></slot>
+  </header>
+  <main>
+    <slot></slot>
+  </main>
+  <footer>
+    <slot name="footer"></slot>
+  </footer>
+</div>
+```
+
+![参考图片](https://vuejs.org/assets/named-slots.ebb7b207.png)
+
+### Dynamic Slot Names
+语法：`<template v-slot:[dynamicName]>`
+
+### Scoped Slots
+子组件内的参数传给父组件，在父组件中访问并安排样式。详情参考 [List生成例子](https://vuejs.org/guide/components/slots.html#fancy-list-example)
+
+- 写法类似 render functions中的逻辑
+- 和 Composable 概念类似，Renderless Component即只处理逻辑（fetching，pagination），不处理样式。
 
 
 
