@@ -419,6 +419,102 @@ const props = defineProps({
 - 和 Composable 概念类似，Renderless Component即只处理逻辑（fetching，pagination），不处理样式。
 
 
+## Provide / inject
+[参考Vue文档](https://vuejs.org/guide/components/provide-inject.html#inject)
+### inject Default Values
+- 如果没有匹配到provide的Key（`’message'`），则使用default value
+- ∵ 运行时不知道是否会提供，inject的type会默认带有 `undefined`。
+	- 如果设置了default value就会移除
+	- 如果确认肯定会提供，可以断言 `inject('foo') as string`
+
+
+```ts
+const value = inject('message', 'default value')
+```
+
+### 最佳实践 - 将更改保持在`provide`中
+- Keep any mutations to reactive state inside of the provider whenever possible
+	- provide mutation methods 
+	- wrap the provided value with `readonly()`
+
+### 最佳实践 - Provide Symbol Keys
+- Provide Symbol Keys
+- export the Symbols in a dedicated file
+
+
+### `InjectionKey`
+
+```ts
+import type { InjectionKey } from 'vue'
+
+const key = Symbol() as InjectionKey<string>
+
+provide(key, 'foo') // providing non-string value will result in error
+```
+
+# 异步组件
+## `defineAsyncComponent`
+- 最后得到的 `AsyncComp` 是一个包装器组件，仅在页面需要它渲染时才调用加载函数。
+
+```ts
+import { defineAsyncComponent } from 'vue'
+
+const AsyncComp = defineAsyncComponent(() =>
+	import('./components/MyComponent.vue')
+)
+
+onst AsyncComp = defineAsyncComponent(() => {
+	// 加载函数
+	loader: () => import('./Foo.vue'),
+
+	// Loading 组件
+	loadingComponent: LoadingComponent,
+	// 展示加载组件前的延迟时间，默认为 200ms
+	// 防止网络很好，看起来像在闪烁
+	delay: 200,
+
+	// Error 组件
+	errorComponent: ErrorComponent,
+	// timeout 时间限制，超时了会显示报错组件，默认值是：Infinity
+	timeout: 3000
+})
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
