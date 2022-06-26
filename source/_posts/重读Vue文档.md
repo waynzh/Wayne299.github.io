@@ -480,16 +480,58 @@ onst AsyncComp = defineAsyncComponent(() => {
 })
 ```
 
+# Custom Drectives
+[参考Vue文档](https://vuejs.org/guide/reusability/custom-directives.html#introduction)
+- setup中，任何`v`开头的都可以作为自定义指令。
+- 没有setup中，需要用 `directives` 注册
 
+```html
+<script setup>
+// enables v-focus in templates
+const vFocus = {
+  mounted: (el) => el.focus()
+}
+</script>
 
+<template>
+  <input v-focus />
+</template>
+```
 
+# Build-in  Components
+## KeepAlive 
+[参考Vue文档](https://vuejs.org/guide/built-ins/keep-alive.html#include-exclude)
+### Include / Exclude
 
+```html
+<!-- 逗号分隔，不需要v-bind -->
+<KeepAlive include="a,b">
+  <component :is="view" />
+</KeepAlive>
 
+<!-- 正则 -->
+<KeepAlive :include="/a|b/">
+<!-- Array -->
+<KeepAlive :include="['a', 'b']">
+```
 
+### Max Cached Instances
+超过 max 时，最旧访问的缓存实例将被删除，为新的缓存提供空间
 
+```html
+<KeepAlive :max="10">
+  <component :is="activeComponent" />
+</KeepAlive>
+```
 
-
-
+### Lifecycle of Cached Instance
+- `onDeactivated()`: 
+	- `<KeepAlive>`中的cache当从DOM移除时。非 `unmounted`
+	- unmount 和 每次从DOM移除时
+- `onActivated()`: 
+	- `<KeepAlive>`中的cache添加到DOM时。
+	- intial mount 和 每次插入DOM时
+	
 
 
 
