@@ -531,38 +531,86 @@ const vFocus = {
 - `onActivated()`: 
 	- `<KeepAlive>`中的cache添加到DOM时。
 	- intial mount 和 每次插入DOM时
-	
 
 
+## Teleport
+[参考Vue文档](https://vuejs.org/guide/built-ins/teleport.html#basic-usage)
+### To
+- `to`: a CSS selector string / an actual DOM node
 
+```html
+<button @click="open = true">Open Modal</button>
 
+<Teleport to="body">
+  <div v-if="open" class="modal">
+    <p>Hello from the modal!</p>
+    <button @click="open = false">Close</button>
+  </div>
+</Teleport>
+```
 
+```html
+<Teleport to="#modals">
+  <div>A</div>
+</Teleport>
+<Teleport to="#modals">
+  <div>B</div>
+</Teleport>
 
+<!-- = -->
+<div id="modals">
+  <div>A</div>
+  <div>B</div>
+</div>
+```
 
+### Disabled
+```html
+<Teleport to="body" :disabled="isMobile">
+  ...
+</Teleport>
+```
 
+# Reactivity in Depth
+[参考Vue文档](https://vuejs.org/guide/extras/reactivity-in-depth.html#component-debugging-hooks)
+## Component Debugging Hooks
+- `onRenderTracked` / `onRenderTriggered`
 
+```html
+<script setup>
+import { onRenderTracked, onRenderTriggered } from 'vue'
 
+onRenderTracked((event) => {
+  debugger
+})
 
+onRenderTriggered((event) => {
+  debugger
+})
+</script>
+```
 
+## Computed / Watcher Debugging
+- `onTrack` / `onTrigger`
 
+```ts
+const plusOne = computed(() => count.value + 1, {
+  onTrack(e) {
+    // triggered when count.value is tracked as a dependency
+    debugger
+  },
+  onTrigger(e) {
+    // triggered when count.value is mutated
+    debugger
+  }
+})
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+watch(source, callback, {
+  onTrack(e) {
+    debugger
+  },
+  onTrigger(e) {
+    debugger
+  }
+})
+```
