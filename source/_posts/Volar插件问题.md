@@ -18,4 +18,6 @@ Type '{ class: string; }' is not assignable to type 'DetailedHTMLProps<HTMLAttri
 
 
 # 解决方法
-vue2用vetur，vue3的项目再用volar
+1. vue2用vetur，vue3的项目再用volar
+2. 参考插件提供的 [解决方式](https://github.com/johnsoncodehk/volar/discussions/592#discussioncomment-1763880)
+![pic2](Volar插件问题/solution.png)
