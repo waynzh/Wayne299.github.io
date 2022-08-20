@@ -312,10 +312,10 @@
 
 
   
-    <article id="post-M1 yarn失败：node版本切换" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-node版本切换" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2021/12/23/M1%20yarn%E5%A4%B1%E8%B4%A5%EF%BC%9Anode%E7%89%88%E6%9C%AC%E5%88%87%E6%8D%A2/" class="article-date">
+      <a href="/2021/12/23/node%E7%89%88%E6%9C%AC%E5%88%87%E6%8D%A2/" class="article-date">
       <time datetime="2021-12-23T06:26:42.000Z" itemprop="datePublished">2021-12-23</time>
 </a>
     </div>
@@ -329,7 +329,7 @@
         
   
     <h1 itemprop="name" >
-      <a class="article-title" href="/2021/12/23/M1%20yarn%E5%A4%B1%E8%B4%A5%EF%BC%9Anode%E7%89%88%E6%9C%AC%E5%88%87%E6%8D%A2/">【问题】Mac M1 yarn失败</a>
+      <a class="article-title" href="/2021/12/23/node%E7%89%88%E6%9C%AC%E5%88%87%E6%8D%A2/">【问题】node版本切换</a>
     </h1>
   
 
@@ -339,7 +339,12 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="node版本切换"><a href="#node版本切换" class="headerlink" title="node版本切换"></a>node版本切换</h1><h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">arch -x86_64 zsh</span><br><span class="line"><span class="built_in">source</span> $(brew --prefix nvm)/nvm.sh</span><br><span class="line">nvm use v12</span><br><span class="line"></span><br><span class="line">// 查看现在node版本</span><br><span class="line">nvm current node -v</span><br></pre></td></tr></table></figure>
+        <h1 id="nvm-切换版本"><a href="#nvm-切换版本" class="headerlink" title="nvm 切换版本"></a>nvm 切换版本</h1><h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">arch</span> -x86_64 zsh</span><br><span class="line"><span class="built_in">source</span> $(brew --prefix nvm)/nvm.sh</span><br><span class="line">nvm use v12</span><br><span class="line"></span><br><span class="line">// 查看现在node版本</span><br><span class="line">nvm current node -v</span><br></pre></td></tr></table></figure>
+
+<h1 id="终端每次重新打开都找不到nvm"><a href="#终端每次重新打开都找不到nvm" class="headerlink" title="终端每次重新打开都找不到nvm"></a>终端每次重新打开都找不到nvm</h1><h2 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 因为使用了oh-my-zsh，所以需要将以下配置添加到.zshrc文件中</span></span><br><span class="line"><span class="built_in">source</span> $(brew --prefix nvm)/nvm.sh</span><br></pre></td></tr></table></figure>
+
+<h1 id="nvm-切换默认版本"><a href="#nvm-切换默认版本" class="headerlink" title="nvm 切换默认版本"></a>nvm 切换默认版本</h1><h2 id="解决方案-2"><a href="#解决方案-2" class="headerlink" title="解决方案"></a>解决方案</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nvm <span class="built_in">ls</span></span><br><span class="line">nvm <span class="built_in">alias</span> default v14.18.3</span><br></pre></td></tr></table></figure>
+
       
       
       
