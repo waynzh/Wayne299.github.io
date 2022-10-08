@@ -1150,16 +1150,16 @@ moize@^6.1.0:
     micro-memoize "^4.0.9"
 
 moment-timezone@^0.5.21:
-  version "0.5.34"
-  resolved "http://r.npm.sankuai.com/moment-timezone/download/moment-timezone-0.5.34.tgz#a75938f7476b88f155d3504a9343f7519d9a405c"
-  integrity sha1-p1k490driPFV01BKk0P3UZ2aQFw=
+  version "0.5.37"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.37.tgz#adf97f719c4e458fdb12e2b4e87b8bec9f4eef1e"
+  integrity sha512-uEDzDNFhfaywRl+vwXxffjjq1q0Vzr+fcQpQ1bU0kbzorfS7zVtZnCnGc8mhWmF39d4g4YriF6kwA75mJKE/Zg==
   dependencies:
     moment ">= 2.9.0"
 
 "moment@>= 2.9.0", moment@^2.18.0, moment@^2.22.2:
-  version "2.29.3"
-  resolved "http://r.npm.sankuai.com/moment/download/moment-2.29.3.tgz#edd47411c322413999f7a5940d526de183c031f3"
-  integrity sha1-7dR0EcMiQTmZ96WUDVJt4YPAMfM=
+  version "2.29.4"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
+  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
 morgan@^1.9.1:
   version "1.10.0"
