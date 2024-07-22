@@ -5,8 +5,13 @@ categories: FE
 tags: [总结, HTML]
 ---
 
-# Overview of the DOM Core Interfaces
+# 概览
+>> The Document Object Model (DOM) connects web pages to scripts or programming languages by representing the structure of a document
 
+DOM 方法可以用于访问和操作 `document` 对象（结构、样式、内容）。
+DOM 核心 API 就可以调用来创建和填充 Document 对象。
+
+#  DOM Structure Model
 
 
 # 参考链接
