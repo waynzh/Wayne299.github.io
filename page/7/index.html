@@ -274,7 +274,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="border的部分应用"><a href="#border的部分应用" class="headerlink" title="border的部分应用"></a>border的部分应用</h1><h2 id="border做倒三角形图标"><a href="#border做倒三角形图标" class="headerlink" title="border做倒三角形图标"></a>border做倒三角形图标</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">	<span class="attribute">display</span>: block;</span><br><span class="line">	<span class="attribute">content</span>: <span class="string">""</span>;</span><br><span class="line">	<span class="comment">/*美人尖*/</span></span><br><span class="line">	<span class="attribute">border</span>: <span class="number">5px</span> solid;</span><br><span class="line">	<span class="attribute">border-color</span>: <span class="number">#b00000</span> transparent transparent; <span class="comment">/*上 左右 下*/</span></span><br><span class="line">	<span class="attribute">width</span>: <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h1 id="border的部分应用"><a href="#border的部分应用" class="headerlink" title="border的部分应用"></a>border的部分应用</h1><h2 id="border做倒三角形图标"><a href="#border做倒三角形图标" class="headerlink" title="border做倒三角形图标"></a>border做倒三角形图标</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">	<span class="attribute">display</span>: block;</span><br><span class="line">	<span class="attribute">content</span>: <span class="string">&quot;&quot;</span>;</span><br><span class="line">	<span class="comment">/*美人尖*/</span></span><br><span class="line">	<span class="attribute">border</span>: <span class="number">5px</span> solid;</span><br><span class="line">	<span class="attribute">border-color</span>: <span class="number">#b00000</span> transparent transparent; <span class="comment">/*上 左右 下*/</span></span><br><span class="line">	<span class="attribute">width</span>: <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>:after</code> 选择器是在a后插入内容</li>
 <li>因为<strong>边框是楔形</strong>，所以当内容为空白,<strong>只显示边框</strong>时，形成<strong>美人尖</strong>。</li>
@@ -348,17 +348,17 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>h1<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>p1<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>p2<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>p3<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>若在这时选择第一个p元素，使用<code>p:first-child</code>则会出现错误，因为p的父元素是<strong>div</strong>，而对于div来说，它的<strong>第一个子元素是h1</strong>，不是p，所以会出错。</li>
-<li>同理，<code>E:last-child {}</code> <code>E:only-child {}</code> 与上面的一样，E元素必须是其父元素的最后一个子元素或唯一一个子元素才可以。</li>
+<li>同理，<code>E:last-child &#123;&#125;</code> <code>E:only-child &#123;&#125;</code> 与上面的一样，E元素必须是其父元素的最后一个子元素或唯一一个子元素才可以。</li>
 </ul>
 <h2 id="E-nth-child-1"><a href="#E-nth-child-1" class="headerlink" title="E:nth-child(1) {}"></a>E:nth-child(1) {}</h2><ul>
-<li>与<code>E:first-child {}</code>等效，E需要是父元素的第一个子元素。</li>
+<li>与<code>E:first-child &#123;&#125;</code>等效，E需要是父元素的第一个子元素。</li>
 <li>比如： <code>p:nth-child(2)</code> 才可以选中p1</li>
 </ul>
 <h2 id="nth-child-odd-even"><a href="#nth-child-odd-even" class="headerlink" title=":nth-child(odd/even) {}"></a>:nth-child(odd/even) {}</h2><ul>
 <li>匹配属于其父元素的第N个子元素，不论元素的类型。</li>
 </ul>
 <h2 id="规范"><a href="#规范" class="headerlink" title="规范"></a>规范</h2><ul>
-<li>可写成 <code>div h1:first-child{}</code> 明确父元素，自然能看到是不是第一个E属性子元素，就不容易犯错。</li>
+<li>可写成 <code>div h1:first-child&#123;&#125;</code> 明确父元素，自然能看到是不是第一个E属性子元素，就不容易犯错。</li>
 </ul>
 
       
@@ -425,12 +425,12 @@
               <h1 id="overflow-hidden-的作用总结"><a href="#overflow-hidden-的作用总结" class="headerlink" title="overflow:hidden 的作用总结"></a><code>overflow:hidden</code> 的作用总结</h1><h2 id="一-溢出隐藏"><a href="#一-溢出隐藏" class="headerlink" title="一. 溢出隐藏"></a>一. 溢出隐藏</h2><ul>
 <li>一般在div中设置后，该元素的内容若超出了给定的宽度和高度属性，那么超出的部分将会被隐藏，不占位。</li>
 </ul>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">text-overflow</span>: <span class="selector-tag">ellipsis</span>;	<span class="comment">/* 当对象内文本溢出时可显示省略标记（...）*/</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">text-overflow</span>: ellipsis;	<span class="comment">/* 当对象内文本溢出时可显示省略标记（...）*/</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="二-消除浮动"><a href="#二-消除浮动" class="headerlink" title="二. 消除浮动"></a>二. 消除浮动</h2><ul>
 <li>一般而言，父级元素不设置高度时，高度由随内容增加自适应高度。当父级元素内部的子元素全部都设置浮动float之后，子元素会脱离标准流，不占位，父级元素检测不到子元素的高度，父级元素高度为0，下面的元素会顶上去，造成页面的塌陷。</li>
 </ul>
-<h3 id="方法一：给父级加overflow-hidden属性"><a href="#方法一：给父级加overflow-hidden属性" class="headerlink" title="方法一：给父级加overflow: hidden属性"></a>方法一：给父级加<code>overflow: hidden</code>属性</h3><h3 id="方法二：给父级加-after"><a href="#方法二：给父级加-after" class="headerlink" title="方法二：给父级加::after"></a>方法二：给父级加<code>::after</code></h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.outDiv</span><span class="selector-pseudo">::after</span> &#123;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">""</span>;</span><br><span class="line">    <span class="attribute">clear</span>: both;</span><br><span class="line">    <span class="attribute">display</span>: block;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="方法一：给父级加overflow-hidden属性"><a href="#方法一：给父级加overflow-hidden属性" class="headerlink" title="方法一：给父级加overflow: hidden属性"></a>方法一：给父级加<code>overflow: hidden</code>属性</h3><h3 id="方法二：给父级加-after"><a href="#方法二：给父级加-after" class="headerlink" title="方法二：给父级加::after"></a>方法二：给父级加<code>::after</code></h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.outDiv</span><span class="selector-pseudo">::after</span> &#123;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="attribute">clear</span>: both;</span><br><span class="line">    <span class="attribute">display</span>: block;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           
       
       
@@ -497,7 +497,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h1 id="天猫网站前端设计"><a href="#天猫网站前端设计" class="headerlink" title="天猫网站前端设计"></a>天猫网站前端设计</h1><p><a href="https://github.com/Wayne299/tmall-website" target="_blank" rel="noopener">GitHub</a>同步训练，搭建完成前记录效果截图。</p>
+              <h1 id="天猫网站前端设计"><a href="#天猫网站前端设计" class="headerlink" title="天猫网站前端设计"></a>天猫网站前端设计</h1><p><a target="_blank" rel="noopener" href="https://github.com/Wayne299/tmall-website">GitHub</a>同步训练，搭建完成前记录效果截图。</p>
 <p>当前进度：node+express 搭建，因没有数据库后台，只是功能上的展示</p>
 <h2 id="公共部分"><a href="#公共部分" class="headerlink" title="公共部分"></a>公共部分</h2><p><img src="/2019/11/18/tmall-website/%E5%85%AC%E5%85%B1.png" alt="公共"></p>
           
@@ -914,8 +914,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h1 id="Hexo-语法入门"><a href="#Hexo-语法入门" class="headerlink" title="Hexo 语法入门"></a>Hexo 语法入门</h1><h2 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br><span class="line">$ hexo g</span><br><span class="line">$ hexo s</span><br><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
+              <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h1 id="Hexo-语法入门"><a href="#Hexo-语法入门" class="headerlink" title="Hexo 语法入门"></a>Hexo 语法入门</h1><h2 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br><span class="line">$ hexo g</span><br><span class="line">$ hexo s</span><br><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
           
       
       

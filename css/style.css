@@ -2931,6 +2931,9 @@ header.article-header h1:first-child {
 .copyright:hover p .copy-path::after {
   content: "复制";
 }
+.copyright .post-url {
+  word-break: break-all;
+}
 .copyright .post-url:hover {
   font-weight: normal;
 }
